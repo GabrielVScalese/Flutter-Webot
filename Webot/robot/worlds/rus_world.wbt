@@ -1,0 +1,186 @@
+#VRML_SIM R2021a utf8
+WorldInfo {
+  coordinateSystem "NUE"
+}
+Viewpoint {
+  orientation -0.20566429600676053 -0.9559837349983198 -0.2092780346015938 1.6619054246083962
+  position -1.1591104799614795 0.6260957793619583 -0.02755630965563787
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+}
+Robot {
+  translation 0 0.038 0
+  children [
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        axis -1 0 0
+        anchor 0.045 -0.0176 0
+      }
+      device [
+        RotationalMotor {
+          name "motor roda esquerda"
+        }
+        PositionSensor {
+          name "sensor roda esquerda"
+        }
+      ]
+      endPoint Solid {
+        translation 0.045004127923461694 -0.01760095436205577 1.3234967960943285e-06
+        rotation -0.999999647772517 -0.0006327988091038336 -0.0005513805483559795 5.758821796483726
+        children [
+          Transform {
+            rotation 0 0 1 1.5707996938995747
+            children [
+              DEF shape_roda Shape {
+                appearance PBRAppearance {
+                  baseColor 0.8 0.15 0.3
+                  roughness 1
+                  metalness 0
+                }
+                geometry Cylinder {
+                  height 0.01
+                  radius 0.02
+                }
+              }
+            ]
+          }
+        ]
+        name "roda direita"
+        boundingObject Transform {
+          rotation 0 0 1 1.5707996938995747
+          children [
+            USE shape_roda
+          ]
+        }
+        physics DEF fisica_roda Physics {
+          density -1
+          mass 0.005
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        axis -1 0 0
+        anchor -0.045 -0.0176 0
+      }
+      device [
+        RotationalMotor {
+          name "motor roda direita"
+        }
+        PositionSensor {
+          name "sensor roda direita"
+        }
+      ]
+      endPoint Solid {
+        translation -0.045 -0.0176 0
+        rotation -1 0 0 0
+        children [
+          Transform {
+            rotation 0 0 1 1.5707996938995747
+            children [
+              USE shape_roda
+            ]
+          }
+        ]
+        name "roda esquerda"
+        boundingObject Transform {
+          rotation 0 0 1 1.5707996938995747
+          children [
+            USE shape_roda
+          ]
+        }
+        physics USE fisica_roda
+      }
+    }
+    DEF rus_shape Shape {
+      appearance PBRAppearance {
+        baseColor 0.58 0.4 1
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.075 0.075 0.075
+      }
+    }
+    DistanceSensor {
+      translation 0 0.01 -0.038
+      rotation 0 1 0 1.7016996938995748
+      children [
+        Transform {
+          rotation 0 0 1 -1.5708003061004252
+          children [
+            Shape {
+              appearance PBRAppearance {
+                baseColor 0.9 0.9 0
+                roughness 1
+                metalness 0
+              }
+              geometry Cylinder {
+                height 0.004
+                radius 0.008
+              }
+            }
+          ]
+        }
+      ]
+      name "ir0"
+      lookupTable [
+        0.05 1024 0
+        0.15 0 0
+      ]
+      numberOfRays 2
+    }
+    DistanceSensor {
+      translation 0 0.01 0.038
+      rotation 0 1 0 -1.5707996938995747
+      name "ir1"
+      lookupTable [
+        0.03 1024 0
+        0.2 0 0
+      ]
+      numberOfRays 2
+    }
+  ]
+  name "rus"
+  boundingObject DEF rus_shape Shape {
+    appearance PBRAppearance {
+      baseColor 0.58 0.4 1
+      roughness 1
+      metalness 0
+    }
+    geometry Box {
+      size 0.075 0.075 0.075
+    }
+  }
+  physics Physics {
+    density -1
+    mass 0.2
+  }
+  controller "rus_controller"
+  synchronization FALSE
+}
+Solid {
+  translation 0 0.0176 -0.22
+  children [
+    Transform {
+      children [
+        Solid {
+          children [
+            DEF parede Shape {
+              appearance PBRAppearance {
+              }
+              geometry Box {
+                size 0.3 0.1 0.01
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+  boundingObject USE parede
+}

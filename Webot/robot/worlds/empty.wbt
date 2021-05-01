@@ -1,0 +1,77 @@
+#VRML_SIM R2021a utf8
+WorldInfo {
+  coordinateSystem "NUE"
+}
+Viewpoint {
+  orientation -0.16255418090396942 0.9835130462013401 0.07923525870722291 0.8361707737262788
+  position 0.3988877229562475 0.1860292325058145 0.44599203884471245
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+}
+Robot {
+  translation 0 0.038 0
+  children [
+    DEF rus_shape Shape {
+      appearance PBRAppearance {
+        baseColor 0.58 0.4 1
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.075 0.075 0.075
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        axis -1 0 0
+        anchor 0.045 -0.0176 0
+      }
+      device [
+        RotationalMotor {
+          name "motor roda esquerda"
+        }
+        PositionSensor {
+          name "sensor roda esquerda"
+        }
+      ]
+      endPoint Solid {
+        translation 0.045 -0.0176 0
+        rotation 1 0 0 0.5235996938995747
+        children [
+          Transform {
+            rotation 0 0 1 1.5707996938995747
+            children [
+              DEF shape_roda Shape {
+                appearance PBRAppearance {
+                  baseColor 0.8 0.15 0.3
+                  roughness 1
+                  metalness 0
+                }
+                geometry Cylinder {
+                  height 0.01
+                  radius 0.02
+                }
+              }
+            ]
+          }
+        ]
+        name "roda direita"
+        boundingObject Transform {
+          rotation 0 0 1 1.5707996938995747
+          children [
+            USE shape_roda
+          ]
+        }
+        physics Physics {
+          density -1
+          mass 0.005
+        }
+      }
+    }
+  ]
+  name "rus"
+}
