@@ -6,8 +6,6 @@ import json
 
 from controller import Robot, GPS
 
-print("Iniciando")
-
 timestep = 64
 
 speed = 0
@@ -19,7 +17,7 @@ def get_port():
 def get_ip():
     hostname = socket.gethostname()
     ip_address = socket.gethostbyname(hostname)
-    print(ip_address)
+   
     return ip_address
 
 def get_info (request):
@@ -67,7 +65,9 @@ def on_new_client(socket, addr):
     socket.send('Message'.encode())
         
     socket.close()
+
     return        
+
 
 def servidor(https, hport):
     sockHttp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -83,13 +83,11 @@ def servidor(https, hport):
         _thread.start_new_thread(on_new_client, (client,addr))
 
 
-
 class MeuRobot:
     def __init__(self, robot):
         
         self.robot = robot
         self.nome  = robot.getName()
-        print("Nome do robo : ", self.nome)
         self.motor_esq = self.robot.getDevice("motor roda esquerda")
         self.motor_dir = self.robot.getDevice("motor roda direita")
 
@@ -99,7 +97,6 @@ class MeuRobot:
         self.motor_esq.setVelocity(0.0)
         self.motor_dir.setVelocity(0.0)
 
-        # obtem o sensor de distancia
         self.ir0 = self.robot.getDevice("ir0")
         self.ir0.enable(timestep)
 
@@ -111,8 +108,7 @@ class MeuRobot:
 
         self.ir3 = self.robot.getDevice("ir3")
         self.ir3.enable(timestep)
-        
-        self.parado = False
+
        
     def run(self):
         raise NotImplementedError
@@ -121,12 +117,8 @@ class MeuRobot:
 class TI502(MeuRobot):
     def run(self):
         while self.robot.step(timestep) != -1:
-            
             self.motor_esq.setVelocity(speed * direction)
             self.motor_dir.setVelocity(speed * direction)
-                 
-    def  pararRobo(self, estado):
-        self.parado = estado    
 
 
 robot = Robot()

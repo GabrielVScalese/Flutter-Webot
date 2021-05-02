@@ -7,7 +7,7 @@ class Client {
       var jsonData = {'msg': option};
 
       HttpClientRequest request =
-          await HttpClient().post('192.168.149.1', 9001, '') /*1*/
+          await HttpClient().post('192.168.149.1', 9001, '')
             ..headers.contentType = ContentType.json
             ..write(jsonEncode(jsonData));
 
