@@ -13,8 +13,6 @@ class Client {
 
       HttpClientResponse response = await request.close();
       await utf8.decoder.bind(response).forEach(print);
-
-      print(response);
     } catch (error) {}
   }
 }
